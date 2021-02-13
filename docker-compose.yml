@@ -1,0 +1,50 @@
+version: '3'
+services:
+ 
+  jira:
+    container_name: jira_w_postgres
+    image: atlassian/jira-software:latest
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - jira_postgres
+    volumes:
+      - ./volumes/jira/application-data:/var/atlassian/application-data/jira
+      - ./volumes/jira/application-data/log/tomcat:/opt/atlassian/jira/logs/
+    environment:
+      - ATL_JDBC_URL
+      - ATL_JDBC_USER
+      - ATL_JDBC_PASSWORD
+      - ATL_DB_DRIVER
+      - ATL_DB_TYPE
+      - ATL_DB_SCHEMA_NAME
+      - ATL_TOMCAT_SCHEME
+      - ATL_PROXY_PORT
+      - ATL_PROXY_NAME
+      - ATL_TOMCAT_SECURE
+      - ATL_TOMCAT_CONTEXTPATH
+      - JVM_MINIMUM_MEMORY
+      - JVM_MAXIMUM_MEMORY
+    networks:
+      - jiranet
+ 
+  jira_postgres:
+    container_name: jira_postgres_11
+    image: postgres:11
+    restart: always
+    volumes:
+      - ./volumes/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_ENCODING
+      - POSTGRES_COLLATE
+      - POSTGRES_COLLATE_TYPE
+    networks:
+      - jiranet
+ 
+networks:
+  jiranet:
+    driver: bridge
