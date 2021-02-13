@@ -1,2 +1,2 @@
 # jira-postgresql-docker
-Docker compose file to run the latest official Atlassian JIRA docker image + PostgreSQL 11 
+Docker compose file to run the latest official Atlassian JIRA Software docker image + PostgreSQL 11 
