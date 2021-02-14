@@ -32,6 +32,8 @@ services:
   jira_postgres:
     container_name: jira_postgres_11
     image: postgres:11
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false" # avoid watchtower update
     restart: always
     volumes:
       - ./volumes/postgres/data:/var/lib/postgresql/data
